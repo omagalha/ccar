@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Confira os detalhes deste veículo no estoque da C CAR.">
+  <title>Veículo | C CAR</title>
+  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="vehicle.css?v=1">
+  <script src="config.js?v=10"></script>
+  <script src="vehicle.js?v=1" defer></script>
+</head>
+<body class="vehicle-page">
+  <div class="utility"><span>C CAR · Veículos</span><div><a href="https://www.instagram.com/ccar_automoveis/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="tel:+5522997643573">(22) 99764-3573</a></div></div>
+  <header class="vehicle-header">
+    <a class="brand" href="index.html" aria-label="C CAR início"><img src="assets/logo.png" alt="C CAR"></a>
+    <a class="vehicle-back" href="index.html#estoque">← Voltar ao estoque</a>
+    <button class="gold header-contact" id="pageContactTop">Fale com um vendedor</button>
+  </header>
+
+  <main id="vehiclePageMain">
+    <div id="vehicleLoading" class="vehicle-state"><img src="assets/logo.png" alt=""><p>Carregando veículo…</p></div>
+    <section id="vehicleContent" class="vehicle-content" hidden>
+      <nav class="vehicle-breadcrumb" aria-label="Navegação estrutural"><a href="index.html">Início</a><span>/</span><a href="index.html#estoque">Estoque</a><span>/</span><strong id="breadcrumbVehicle">Veículo</strong></nav>
+      <div class="vehicle-layout">
+        <div class="vehicle-gallery-column">
+          <figure class="vehicle-main-photo"><img id="vehicleCover" alt=""><span id="photoCounter"></span></figure>
+          <div id="vehicleThumbnails" class="vehicle-thumbnails" aria-label="Galeria de fotos"></div>
+        </div>
+        <aside class="vehicle-summary">
+          <span class="eyebrow" id="vehicleCategory"></span>
+          <h1 id="vehicleName"></h1>
+          <p class="vehicle-version" id="vehicleVersion"></p>
+          <strong class="vehicle-price" id="vehiclePrice"></strong>
+          <div class="vehicle-specs" id="vehicleSpecs"></div>
+          <button class="gold vehicle-contact" id="pageContact">Tenho interesse neste veículo</button>
+          <p class="vehicle-contact-note">Fale diretamente com a equipe C CAR pelo WhatsApp.</p>
+        </aside>
+      </div>
+      <section class="vehicle-description-section">
+        <span class="eyebrow">SOBRE O VEÍCULO</span>
+        <h2>Detalhes</h2>
+        <p id="vehicleDescription"></p>
+      </section>
+      <section id="relatedSection" class="vehicle-related" hidden>
+        <div class="section-head"><div><span class="eyebrow">OUTRAS OPÇÕES</span><h2>Você também pode gostar</h2></div><a href="index.html#estoque">Ver todo o estoque</a></div>
+        <div id="relatedVehicles" class="grid"></div>
+      </section>
+    </section>
+    <section id="vehicleNotFound" class="vehicle-state" hidden><img src="assets/logo.png" alt=""><h1>Veículo não encontrado</h1><p>Este anúncio pode ter sido removido ou marcado como vendido.</p><a class="gold" href="index.html#estoque">Voltar ao estoque</a></section>
+  </main>
+
+  <footer><div><img src="assets/logo.png" alt="C CAR"><p>Veículos e atendimento.</p></div><div class="footer-links"><a href="index.html#estoque">Estoque</a><a href="index.html#feed">A C CAR</a><a href="index.html#atendimento">Contato</a></div><span>© <span id="vehicleYearFooter"></span> C CAR</span></footer>
+</body>
+</html>
+

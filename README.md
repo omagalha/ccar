@@ -2,6 +2,8 @@
 
 Site estático responsivo, feed com destaques do estoque, catálogo com busca e filtros, detalhes com galeria e painel conectado ao Supabase por Auth / REST / Storage. Não contém estoque fictício. A abertura inclui uma simulação da fachada finalizada, baseada na referência fornecida pelo usuário e identificada como prévia. O poste central e os carros externos foram removidos da simulação.
 
+Cada card do catálogo abre uma página própria em `veiculo.html?id=...`, com galeria ampla, ficha resumida, descrição, contato por WhatsApp e sugestões da mesma categoria. A abertura registra a visualização anônima usada nos insights do painel.
+
 ## Continuar pelo computador
 
 1. Crie um projeto Supabase próprio.
