@@ -7,6 +7,7 @@
   <title>Veículo | C CAR</title>
   <link rel="stylesheet" href="style.css?v=11">
   <link rel="stylesheet" href="vehicle.css?v=5">
+  <link rel="stylesheet" href="vehicle-fit.css?v=1">
   <script src="config.js?v=10"></script>
   <script src="vehicle.js?v=2" defer></script>
 </head>
@@ -25,7 +26,7 @@
       <div class="vehicle-layout">
         <div class="vehicle-gallery-column">
           <figure class="vehicle-main-photo" id="vehiclePhotoStage">
-            <img id="vehicleCover" class="vehicle-photo-foreground" alt="">
+            <img id="vehicleCover" class="vehicle-photo-foreground" alt="" style="width:100%;height:100%;object-fit:contain;object-position:center">
             <button id="previousPhoto" class="photo-nav previous" type="button" aria-label="Foto anterior">‹</button>
             <button id="nextPhoto" class="photo-nav next" type="button" aria-label="Próxima foto">›</button>
             <button id="expandPhoto" class="photo-expand" type="button" aria-label="Ampliar foto">Ampliar</button>

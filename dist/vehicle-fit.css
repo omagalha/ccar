@@ -1,0 +1,27 @@
+/* Regra final da galeria: a imagem inteira deve permanecer visível em qualquer proporção. */
+.vehicle-main-photo {
+  aspect-ratio: auto !important;
+  height: clamp(520px, calc(100svh - 190px), 820px) !important;
+  min-height: 0 !important;
+  background: transparent !important;
+}
+
+.vehicle-main-photo > img.vehicle-photo-foreground {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+@media (max-width: 650px) {
+  .vehicle-main-photo {
+    height: min(72svh, 680px) !important;
+    min-height: 430px !important;
+  }
+}
+
