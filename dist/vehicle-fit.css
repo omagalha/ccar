@@ -8,7 +8,8 @@
 
 .vehicle-main-photo > img.vehicle-photo-foreground {
   display: block !important;
-  position: relative !important;
+  position: absolute !important;
+  inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
   max-width: 100% !important;
@@ -24,4 +25,3 @@
     min-height: 430px !important;
   }
 }
-
