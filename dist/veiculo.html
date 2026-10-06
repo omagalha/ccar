@@ -6,9 +6,9 @@
   <meta name="description" content="Confira os detalhes deste veículo no estoque da C CAR.">
   <title>Veículo | C CAR</title>
   <link rel="stylesheet" href="style.css?v=11">
-  <link rel="stylesheet" href="vehicle.css?v=2">
+  <link rel="stylesheet" href="vehicle.css?v=3">
   <script src="config.js?v=10"></script>
-  <script src="vehicle.js?v=1" defer></script>
+  <script src="vehicle.js?v=2" defer></script>
 </head>
 <body class="vehicle-page">
   <div class="utility"><span>C CAR · Veículos</span><div><a href="https://www.instagram.com/ccar_automoveis/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="tel:+5522997643573">(22) 99764-3573</a></div></div>
@@ -24,7 +24,14 @@
       <nav class="vehicle-breadcrumb" aria-label="Navegação estrutural"><a href="index.html">Início</a><span>/</span><a href="index.html#estoque">Estoque</a><span>/</span><strong id="breadcrumbVehicle">Veículo</strong></nav>
       <div class="vehicle-layout">
         <div class="vehicle-gallery-column">
-          <figure class="vehicle-main-photo"><img id="vehicleCover" alt=""><span id="photoCounter"></span></figure>
+          <figure class="vehicle-main-photo" id="vehiclePhotoStage">
+            <img id="vehicleBackdrop" class="vehicle-photo-backdrop" alt="" aria-hidden="true">
+            <img id="vehicleCover" class="vehicle-photo-foreground" alt="">
+            <button id="previousPhoto" class="photo-nav previous" type="button" aria-label="Foto anterior">‹</button>
+            <button id="nextPhoto" class="photo-nav next" type="button" aria-label="Próxima foto">›</button>
+            <button id="expandPhoto" class="photo-expand" type="button" aria-label="Ampliar foto">Ampliar</button>
+            <span id="photoCounter"></span>
+          </figure>
           <div id="vehicleThumbnails" class="vehicle-thumbnails" aria-label="Galeria de fotos"></div>
         </div>
         <aside class="vehicle-summary">
@@ -49,6 +56,14 @@
     </section>
     <section id="vehicleNotFound" class="vehicle-state" hidden><img src="assets/logo.png" alt=""><h1>Veículo não encontrado</h1><p>Este anúncio pode ter sido removido ou marcado como vendido.</p><a class="gold" href="index.html#estoque">Voltar ao estoque</a></section>
   </main>
+
+  <dialog id="photoLightbox" class="photo-lightbox">
+    <button id="closeLightbox" class="lightbox-close" type="button" aria-label="Fechar foto ampliada">✕</button>
+    <button id="lightboxPrevious" class="lightbox-nav previous" type="button" aria-label="Foto anterior">‹</button>
+    <img id="lightboxImage" alt="Foto ampliada do veículo">
+    <button id="lightboxNext" class="lightbox-nav next" type="button" aria-label="Próxima foto">›</button>
+    <span id="lightboxCounter"></span>
+  </dialog>
 
   <footer><div><img src="assets/logo.png" alt="C CAR"><p>Veículos e atendimento.</p></div><div class="footer-links"><a href="index.html#estoque">Estoque</a><a href="index.html#feed">A C CAR</a><a href="index.html#atendimento">Contato</a></div><span>© <span id="vehicleYearFooter"></span> C CAR</span></footer>
 </body>
