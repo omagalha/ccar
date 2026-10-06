@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Painel de gestão | C CAR</title>
+  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="admin.css?v=3">
+  <script src="config.js?v=10"></script>
+  <script src="contract-template.js?v=10" defer></script>
+  <script src="documents.js?v=10" defer></script>
+  <script src="admin-app.js?v=3" defer></script>
+</head>
+<body class="admin-body">
+  <header class="admin-header">
+    <a href="index.html" aria-label="Voltar ao site"><img src="assets/logo.png" alt="C CAR"></a>
+    <div><span>Painel de gestão</span><a class="admin-site-link" href="index.html">Ver site</a></div>
+  </header>
+
+  <main class="admin-shell">
+    <section id="adminLogin" class="admin-login">
+      <span class="eyebrow">ACESSO DA EQUIPE</span>
+      <h1>Entre no painel</h1>
+      <p>Use sua conta individual para administrar o estoque da C CAR.</p>
+      <form id="adminLoginForm">
+        <label>E-mail<input id="adminEmail" type="email" autocomplete="username" required></label>
+        <label>Senha<input id="adminPassword" type="password" autocomplete="current-password" minlength="6" required></label>
+        <button id="adminLoginButton" class="gold">Entrar</button>
+      </form>
+      <p id="adminSetupNotice" class="notice" hidden>Conecte o Supabase no arquivo config.js para ativar o painel.</p>
+    </section>
+
+    <section id="adminWorkspace" hidden>
+      <div class="admin-welcome">
+        <div><span class="eyebrow">PAINEL DE GESTÃO</span><h1>Estoque C CAR</h1><p id="adminIdentity"></p></div>
+        <div class="admin-welcome-actions"><button id="openCompany" class="outline">Cadastro da loja</button><button id="adminLogout" class="outline">Sair</button><button id="addVehicle" class="gold">Adicionar veículo</button></div>
+      </div>
+
+      <p id="adminStatus" class="admin-status" role="status" hidden></p>
+
+      <nav class="admin-tabs" aria-label="Seções do painel" role="tablist">
+        <button class="active" id="overviewTab" data-admin-tab="overview" role="tab" aria-selected="true">Visão geral</button>
+        <button id="inventoryTab" data-admin-tab="inventory" role="tab" aria-selected="false">Estoque <span id="inventoryTabCount">0</span></button>
+      </nav>
+
+      <section id="overviewPanel" class="admin-tab-panel" role="tabpanel" aria-labelledby="overviewTab">
+        <div class="overview-toolbar"><div><span class="eyebrow">DESEMPENHO</span><h2>Leitura do período</h2></div><label>PERÍODO<select id="dashboardPeriod"><option value="7">Últimos 7 dias</option><option value="30" selected>Últimos 30 dias</option><option value="90">Últimos 90 dias</option></select></label></div>
+
+        <div class="admin-stats" aria-label="Indicadores do negócio">
+          <article><span>Veículos publicados</span><strong id="statPublished">0</strong><small id="statDraft">0 rascunhos</small></article>
+          <article><span>Valor anunciado</span><strong id="statInventoryValue">R$ 0</strong><small>estoque disponível</small></article>
+          <article><span>Visualizações</span><strong id="statViews">0</strong><small id="statViewsPeriod">últimos 30 dias</small></article>
+          <article><span>Cliques em contato</span><strong id="statContacts">0</strong><small id="statContactsPeriod">últimos 30 dias</small></article>
+          <article class="metric"><span>Taxa de interesse</span><strong id="statContactRate">0%</strong><small>contatos ÷ visualizações</small></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="dashboard-card trend-card"><div class="dashboard-card-head"><div><span class="eyebrow">AUDIÊNCIA</span><h3>Interesse no estoque</h3></div><div class="chart-legend"><span class="views">Visualizações</span><span class="contacts">Contatos</span></div></div><svg id="trendChart" class="trend-chart" viewBox="0 0 760 270" role="img" aria-label="Visualizações e contatos por dia"></svg></article>
+          <article class="dashboard-card status-card"><div class="dashboard-card-head"><div><span class="eyebrow">COMPOSIÇÃO</span><h3>Situação do estoque</h3></div></div><div id="statusBreakdown" class="status-breakdown"></div></article>
+          <article class="dashboard-card ranking-card"><div class="dashboard-card-head"><div><span class="eyebrow">DESEMPENHO</span><h3>Veículos mais vistos</h3></div><button class="text-button" data-go-inventory>Ver estoque</button></div><div id="topVehicles" class="top-vehicles"></div></article>
+          <article class="dashboard-card attention-card"><div class="dashboard-card-head"><div><span class="eyebrow">OPERAÇÃO</span><h3>Pendências do estoque</h3></div></div><div id="attentionList" class="attention-list"></div></article>
+        </div>
+        <p class="metrics-note">As métricas contam no máximo uma ação de cada navegador por veículo a cada dia. Cliques em contato não representam vendas confirmadas.</p>
+      </section>
+
+      <section id="inventoryPanel" class="admin-tab-panel" role="tabpanel" aria-labelledby="inventoryTab" hidden>
+        <div class="admin-inventory">
+          <div class="admin-section-title"><div><span class="eyebrow">GESTÃO DO ESTOQUE</span><h2>Veículos</h2></div><p>Edite anúncios, altere o status e consulte a documentação privada.</p></div>
+          <div class="admin-filters">
+            <label>BUSCAR<input id="adminSearch" type="search" placeholder="Marca, modelo ou versão"></label>
+            <label>STATUS<select id="adminFilter"><option value="">Todos</option><option value="published">Disponíveis</option><option value="draft">Rascunhos</option><option value="sold">Vendidos</option></select></label>
+          </div>
+          <div id="adminVehicleGrid" class="admin-vehicle-grid"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="vehicleDialog" class="admin-dialog">
+    <div class="dialog-top"><div><span class="eyebrow">ESTOQUE</span><h2 id="vehicleDialogTitle">Novo veículo</h2></div><button type="button" data-close-dialog="vehicleDialog" aria-label="Fechar">✕</button></div>
+    <form id="adminVehicleForm">
+      <input type="hidden" id="adminVehicleId">
+      <div class="form-grid">
+        <label>Marca<input id="adminMake" required maxlength="60"></label><label>Modelo<input id="adminModel" required maxlength="80"></label>
+        <label>Versão<input id="adminVersion" maxlength="100"></label><label>Ano<input id="adminYear" type="number" min="1900" max="2100" required></label>
+        <label>Preço (R$)<input id="adminPrice" type="number" min="0" step="0.01" required></label><label>Quilometragem<input id="adminKm" type="number" min="0" required></label>
+        <label>Câmbio<select id="adminTransmission"><option>Automático</option><option>Manual</option><option>CVT</option><option>Automatizado</option></select></label>
+        <label>Tipo<select id="adminCategory"><option>SUV</option><option>Hatch</option><option>Sedã</option><option>Picape</option><option>Moto</option><option>Outros</option></select></label>
+        <label>Combustível<select id="adminFuel"><option>Flex</option><option>Gasolina</option><option>Diesel</option><option>Elétrico</option><option>Híbrido</option><option>Outros</option></select></label>
+        <label>Publicação<select id="adminVehicleStatus"><option value="draft">Rascunho</option><option value="published">Disponível no site</option><option value="sold">Vendido</option></select></label>
+      </div>
+      <label>Descrição<textarea id="adminDescription" rows="4" maxlength="5000"></textarea></label>
+      <label class="check"><input id="adminFeatured" type="checkbox"> Destacar no feed principal</label>
+      <label>Fotos (JPEG, PNG ou WebP · até 15 MB cada)<input id="adminPhotos" type="file" accept="image/jpeg,image/png,image/webp" multiple></label>
+      <p class="muted">A primeira foto é a capa. Arraste para ordenar ou use as setas — inclusive no celular. Fotografias HEIC precisam ser exportadas como JPEG.</p>
+      <div id="adminPhotoPreview" class="admin-photo-preview"></div>
+      <div class="dialog-actions"><button type="button" class="outline" data-close-dialog="vehicleDialog">Cancelar</button><button id="saveAdminVehicle" class="gold">Salvar veículo</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="privateDialog" class="admin-dialog">
+    <div class="dialog-top"><div><span class="eyebrow">ACESSO RESTRITO</span><h2 id="privateDialogTitle">Dados privados</h2></div><button type="button" data-close-dialog="privateDialog" aria-label="Fechar">✕</button></div>
+    <form id="adminPrivateForm">
+      <div class="form-grid">
+        <label>Placa<input id="adminPrivatePlate" maxlength="12"></label><label>Chassi<input id="adminPrivateChassis" maxlength="25"></label>
+        <label>Renavam<input id="adminPrivateRenavam" maxlength="20"></label><label>Cor<input id="adminPrivateColor" maxlength="60"></label>
+        <label>Ano de fabricação<input id="adminPrivateFabricationYear" type="number" min="1900" max="2100"></label><label>Número do motor<input id="adminPrivateEngine" maxlength="100"></label>
+        <label>Categoria no documento<input id="adminPrivateRegistrationCategory" maxlength="100"></label><label>Potência / cilindrada<input id="adminPrivatePower" maxlength="100"></label>
+        <label>Proprietário<input id="adminPrivateOwner" maxlength="180"></label><label>CPF / CNPJ do proprietário<input id="adminPrivateOwnerDocument" maxlength="25"></label>
+        <label>Custo de aquisição (R$)<input id="adminPrivateCost" type="number" min="0" step="0.01"></label>
+      </div>
+      <label>Observações internas<textarea id="adminPrivateNotes" rows="3" maxlength="10000"></textarea></label>
+      <div class="admin-document-box"><div><h3>Documento editável</h3><label>Modelo<select id="adminDocumentType"><option value="contract">Contrato de compra e venda</option><option value="sheet">Ficha para documentação</option></select></label><p>Os dados privados não aparecem no anúncio público.</p></div><button id="generateAdminWord" class="outline" type="button">Gerar Word</button></div>
+      <div class="dialog-actions"><button type="button" class="outline" data-close-dialog="privateDialog">Fechar</button><button id="saveAdminPrivate" class="gold">Salvar dados privados</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="companyDialog" class="admin-dialog company-dialog">
+    <div class="dialog-top"><div><span class="eyebrow">CADASTRO FIXO</span><h2>Dados da loja</h2></div><button type="button" data-close-dialog="companyDialog" aria-label="Fechar">✕</button></div>
+    <p>Informações usadas automaticamente nos documentos. A equipe pode consultar, mas não alterar.</p>
+    <div class="form-grid"><label>Razão social<input id="adminLegalName" readonly></label><label>CNPJ<input id="adminCompanyCnpj" readonly></label><label>Representante<input id="adminRepresentative" readonly></label><label>Cargo / função<input id="adminRepresentativeRole" readonly></label></div>
+    <label>Endereço completo<textarea id="adminCompanyAddress" readonly rows="3"></textarea></label>
+  </dialog>
+</body>
+</html>
