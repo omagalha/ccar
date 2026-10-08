@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /admin-preview.html
+
+Sitemap: https://ccarautomoveis.com.br/sitemap.xml
