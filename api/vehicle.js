@@ -56,7 +56,7 @@ module.exports = async function handler(request, response) {
     const name = `${vehicle.make} ${vehicle.model}${vehicle.version ? ` ${vehicle.version}` : ''}`;
     const title = `${name} ${vehicle.year} | C CAR Automóveis`;
     const description = `${name}, ano ${vehicle.year}, ${Number(vehicle.km).toLocaleString('pt-BR')} km, por ${money(vehicle.price)}. Veja fotos e fale com a C CAR Automóveis.`;
-    const canonical = `${SITE_URL}/veiculo.html?id=${encodeURIComponent(vehicle.id)}`;
+    const canonical = `${SITE_URL}/veiculo/${encodeURIComponent(vehicle.id)}`;
     const images = (vehicle.photos || []).map(photoUrl);
     const image = images[0] || `${SITE_URL}/assets/logo.png`;
     const structuredData = {

@@ -6,7 +6,7 @@
     "api/vehicle.js": { "includeFiles": "dist/veiculo.html" }
   },
   "rewrites": [
-    { "source": "/veiculo.html", "destination": "/api/vehicle" },
+    { "source": "/veiculo/:id", "destination": "/api/vehicle?id=:id" },
     { "source": "/sitemap.xml", "destination": "/api/sitemap" }
   ],
   "headers": [

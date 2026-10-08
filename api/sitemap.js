@@ -20,7 +20,7 @@ module.exports = async function handler(request, response) {
     `<url><loc>${SITE_URL}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>`,
     `<url><loc>${SITE_URL}/privacidade.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>`,
     ...vehicles.map(vehicle => {
-      const location = `${SITE_URL}/veiculo.html?id=${encodeURIComponent(vehicle.id)}`;
+      const location = `${SITE_URL}/veiculo/${encodeURIComponent(vehicle.id)}`;
       const lastModified = vehicle.updated_at ? `<lastmod>${xml(new Date(vehicle.updated_at).toISOString())}</lastmod>` : '';
       return `<url><loc>${xml(location)}</loc>${lastModified}<changefreq>weekly</changefreq><priority>0.8</priority></url>`;
     })
