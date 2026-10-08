@@ -4,12 +4,14 @@ Site estático responsivo, feed com destaques do estoque, catálogo com busca e 
 
 Cada card do catálogo abre uma página própria em `veiculo.html?id=...`, com galeria ampla, ficha resumida, descrição, contato por WhatsApp e sugestões da mesma categoria. A abertura registra a visualização anônima usada nos insights do painel.
 
+O site público inclui consentimento para métricas e publicidade. O Meta Pixel só é carregado depois do aceite; a recusa mantém o catálogo e o contato funcionando normalmente. Os eventos configurados são `PageView`, `ViewContent`, `Search` e `Contact`. A escolha pode ser revista pelo link **Cookies** no rodapé, e `privacidade.html` explica o tratamento ao visitante.
+
 ## Continuar pelo computador
 
 1. Crie um projeto Supabase próprio.
 2. Execute, nesta ordem, `supabase-setup.sql`, `supabase-private.sql`, `supabase-contract-fields.sql`, `supabase-company-lock.sql` e `supabase-insights.sql` no SQL Editor de um projeto novo.
 3. Em Authentication, desative cadastro público. Crie ou convide os usuários da equipe e autorize cada UUID em `admin_users` conforme o comentário no SQL. Ter uma conta não dá acesso de administrador.
-4. Edite `dist/config.js` com a URL do projeto e sua chave pública anon (ou publishable). Nunca use service_role ou secret no frontend. Configure WhatsApp com código do país e DDD, e endereço real.
+4. Edite `dist/config.js` com a URL do projeto, sua chave pública anon (ou publishable), o ID público do Meta Pixel, WhatsApp com código do país e DDD e endereço real. Nunca use service_role, token da API de Conversões ou qualquer segredo no frontend.
 5. Publique a pasta `dist`. Não há instalação ou compilação obrigatória. Qualquer hospedagem estática HTTPS é compatível.
 
 ## Painel administrativo e insights
