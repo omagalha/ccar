@@ -2,14 +2,14 @@
 
 Site estático responsivo, feed com destaques do estoque, catálogo com busca e filtros, detalhes com galeria e painel conectado ao Supabase por Auth / REST / Storage. Não contém estoque fictício. A abertura inclui uma simulação da fachada finalizada, baseada na referência fornecida pelo usuário e identificada como prévia. O poste central e os carros externos foram removidos da simulação.
 
-Cada card do catálogo abre uma página própria em `veiculo.html?id=...`, com galeria ampla, ficha resumida, descrição, contato por WhatsApp e sugestões da mesma categoria. A abertura registra a visualização anônima usada nos insights do painel.
+Cada card do catálogo abre uma página própria em `/veiculo/ID`, com galeria ampla, ficha resumida, descrição, contato por WhatsApp e sugestões da mesma categoria. A abertura registra a visualização anônima usada nos insights do painel.
 
 O site público inclui consentimento para métricas e publicidade. O Meta Pixel só é carregado depois do aceite; a recusa mantém o catálogo e o contato funcionando normalmente. Os eventos configurados são `PageView`, `ViewContent`, `Search` e `Contact`. A escolha pode ser revista pelo link **Cookies** no rodapé, e `privacidade.html` explica o tratamento ao visitante.
 
 ## Continuar pelo computador
 
 1. Crie um projeto Supabase próprio.
-2. Execute, nesta ordem, `supabase-setup.sql`, `supabase-private.sql`, `supabase-contract-fields.sql`, `supabase-company-lock.sql` e `supabase-insights.sql` no SQL Editor de um projeto novo.
+2. Execute, nesta ordem, `supabase-setup.sql`, `supabase-private.sql`, `supabase-contract-fields.sql`, `supabase-company-lock.sql`, `supabase-insights.sql` e `supabase-crm.sql` no SQL Editor de um projeto novo.
 3. Em Authentication, desative cadastro público. Crie ou convide os usuários da equipe e autorize cada UUID em `admin_users` conforme o comentário no SQL. Ter uma conta não dá acesso de administrador.
 4. Edite `dist/config.js` com a URL do projeto, sua chave pública anon (ou publishable), o ID público do Meta Pixel, WhatsApp com código do país e DDD e endereço real. Nunca use service_role, token da API de Conversões ou qualquer segredo no frontend.
 5. Publique a pasta `dist`. Não há instalação ou compilação obrigatória. Qualquer hospedagem estática HTTPS é compatível.
@@ -19,6 +19,14 @@ O site público inclui consentimento para métricas e publicidade. O Meta Pixel 
 O acesso da equipe abre `admin.html`, uma área administrativa responsiva organizada em abas. A visão geral traz indicadores do negócio, gráfico temporal de audiência, situação do estoque, ranking por veículo e pendências operacionais. A aba de estoque oferece busca, filtros, alteração rápida de status, duplicação como rascunho, edição, fotos, dados privados e geração de Word. As fotos podem ser reordenadas por arrastar ou pelos botões direcionais; a primeira é sempre a capa. A duplicação não reutiliza fotos para evitar que a exclusão de um anúncio quebre outro.
 
 Execute `supabase-insights.sql` depois dos quatro scripts de estrutura. Ele acrescenta datas de atualização/publicação e métricas agregadas por veículo. Uma visualização é registrada ao abrir os detalhes; um contato é registrado ao clicar no WhatsApp de um veículo. Cada navegador conta no máximo uma ação de cada tipo por veículo por dia. Não são armazenados IP, user-agent, localização ou outros dados pessoais. As métricas detalhadas só podem ser consultadas por usuários presentes em `admin_users`.
+
+## CRM e funil comercial
+
+Execute `supabase-crm.sql` depois dos demais scripts. Ele cria uma carteira compartilhada para todos os usuários autorizados em `admin_users`, com vendedor responsável, etapa do funil, próximo contato, aniversário, histórico e consentimento para mensagens de relacionamento. Todos os vendedores autorizados podem visualizar e trabalhar todos os leads.
+
+Um cliente pode demonstrar interesse em vários veículos, e um veículo pode possuir vários clientes interessados. O painel exibe essa relação nos dois sentidos: no cartão do lead e no estoque administrativo. O funil possui as etapas Novo lead, Contato iniciado, Qualificado, Visita agendada, Proposta, Negociação, Venda concluída e Perdido.
+
+O botão de WhatsApp apenas prepara a mensagem e abre o aplicativo; esta versão não dispara mensagens automaticamente. Mensagens de relacionamento ficam bloqueadas enquanto o campo de autorização do cliente não estiver marcado. Aniversário e histórico são dados pessoais e permanecem protegidos por RLS, sem acesso público ou anônimo.
 
 ## Fotos e privacidade
 
